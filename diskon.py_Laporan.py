@@ -1,27 +1,34 @@
-# hitung harga
-def hitung(a, b):
-    c = a - (a * (b / 100))
-    return c
+# ================================
+# KALKULATOR DISKON - CLEAN CODE (PYTHON)
+# ================================
 
-# cek murah atau tidak
-def cek(x):
-    if x < 50000:
-        return "Murah"
-    else:
-        return "Mahal"
+BATAS_HARGA_MURAH = 50000
 
-# main
-h = 100000
-d = 20
-hf = hitung(h, d)
-status = cek(hf)
-print("Harga akhir:", hf)
-print("Status:", status)
+def hitung_harga_setelah_diskon(harga_awal: float, persen_diskon: float) -> float:
+    """Menghitung harga akhir setelah dipotong diskon"""
+    potongan = harga_awal * (persen_diskon / 100)
+    return harga_awal - potongan
 
-# duplikasi logika lagi di bawah
-h2 = 200000
-d2 = 30
-hf2 = hitung(h2, d2)
-status2 = cek(hf2)
-print("Harga akhir 2:", hf2)
-print("Status 2:", status2)
+def tentukan_status_harga(harga_akhir: float) -> str:
+    """Menentukan apakah harga termasuk murah atau mahal"""
+    return "Murah" if harga_akhir < BATAS_HARGA_MURAH else "Mahal"
+
+def tampilkan_hasil(harga_awal: float, persen_diskon: float) -> None:
+    """Menampilkan hasil perhitungan diskon ke console"""
+    harga_akhir = hitung_harga_setelah_diskon(harga_awal, persen_diskon)
+    status = tentukan_status_harga(harga_akhir)
+    
+    print(f"Harga awal: Rp{harga_awal}")
+    print(f"Diskon: {persen_diskon}%")
+    print(f"Harga akhir: Rp{harga_akhir}")
+    print(f"Status: {status}")
+    print("-" * 24)
+
+# Data transaksi
+transaksi_list = [
+    {"harga_awal": 100000, "diskon": 20},
+    {"harga_awal": 200000, "diskon": 30}
+]
+
+for transaksi in transaksi_list:
+    tampilkan_hasil(transaksi["harga_awal"], transaksi["diskon"])
